@@ -354,16 +354,18 @@ class pyMechkar: #(object):
             x = data.columns.tolist()
         if(y!='' and {y}.issubset(x)):
             x.remove(y)
+            print('in line 357 {}'.format(y))
             #if ({'Unnamed: 0'}.issubset(x)):
             #    x.drop('Unnamed: 0')
         unq = self._getUniqueCount(data)
+        print('in line 361 {}'.format(unq))
         if ({'Unnamed: 0'}.issubset(unq)):
             unq.drop('Unnamed: 0')
         if (len(factorVars)==0):
             factorVars = unq[unq <= maxcat].index
         #print(data.dtypes)
         data = self._setFactors(data=data, factorVars=factorVars, unq=unq, catmiss=catmiss, maxcat=maxcat)
-        #print(data.dtypes)
+        print('in line 368 {}'.format(data.dtypes))
         ##### if y is null then make a simple table
         #print("_getSimpleTable pass 1...")
         tabaaa1 = self._getSimpleTable(x=x, rn=rn, data=data, miss=miss, catmiss=catmiss, unq=unq, formatted=formatted, categorize=categorize, factorVars=factorVars, maxcat=maxcat, decimals=decimals, messages=messages)
@@ -378,7 +380,7 @@ class pyMechkar: #(object):
                 if (data[y].dtype == "category"): #3
                     if (unq[y] > 8): #4
                         if (messages==True): #5
-                            print("The dependent variable has more than 8 levels, table too large!")
+                            print("The dependent variable has more than {} levels, table too large!".format(unq[y]))
                     elif(min(pd.Series.value_counts(data[y]))==0): #4
                         print("The dependent variable has one or more levels with no items assigned!")
                     else: # 4
@@ -397,7 +399,7 @@ class pyMechkar: #(object):
                         else: #5
                             tab = pd.DataFrame(tab,columns=["Del","Variables","Categories","n","Cat_%s_val1" % lv,"Cat_%s_val2" % lv,"Cat_%s_val3" % lv])
                         tab = tab.drop(['n'], axis=1) #5
-                        #print(tab)
+                        print("in line 403 {}".format(tab))
                         tabaaa1 = pd.merge(tabaaa1, tab, on=['Del','Variables','Categories'],how='left')
                     #print(tabaaa1)
 
@@ -424,6 +426,7 @@ class pyMechkar: #(object):
 
 
     def _getDataExplore(self, data, y, categorize, maxcat, miss, catmiss, decimals, dir):
+        print('Hello World')
     ################## Prepare for the report ###################
         ### initialize the report file
         try:
